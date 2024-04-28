@@ -61,26 +61,31 @@ const Index = () => {
 
   return (
     <Container centerContent p={8} style={{ background: "linear-gradient(to right, #6a11cb, #2575fc)", fontFamily: "'Arial', sans-serif" }}>
-      <VStack spacing={4} width="100%">
-        <Heading as="h1" size="xl">
-          BPM Detector
-        </Heading>
-        <Text>Upload your MP3 or WAV file to detect its BPM.</Text>
-        <Box width="100%">
-          <Input type="file" accept=".mp3, .wav" onChange={handleFileChange} placeholder="Upload your file" size="lg" />
-        </Box>
-        <Button leftIcon={<FaUpload />} colorScheme={isProcessing ? "red" : "green"} onClick={handleUpload} isDisabled={!file || isProcessing}>
-          Upload and Detect BPM
-        </Button>
-        {isProcessing && <Text fontSize="md">Processing... {countdown}s remaining</Text>}
-        {bpm && (
-          <Text fontSize="6xl" fontWeight="bold" color="teal.500">
-            Detected BPM: {bpm}
-          </Text>
-        )}
-      </VStack>
+      <>
+        <VStack spacing={4} width="100%">
+          <Heading as="h1" size="xl">
+            BPM Detector
+          </Heading>
+          <Text>Upload your MP3 or WAV file to detect its BPM.</Text>
+          <Box width="100%">
+            <Input type="file" accept=".mp3, .wav" onChange={handleFileChange} placeholder="Upload your file" size="lg" />
+          </Box>
+          <Button leftIcon={<FaUpload />} colorScheme={isProcessing ? "red" : "green"} onClick={handleUpload} isDisabled={!file || isProcessing}>
+            Upload and Detect BPM
+          </Button>
+          {isProcessing && <Text fontSize="md">Processing... {countdown}s remaining</Text>}
+          {bpm && (
+            <Text fontSize="6xl" fontWeight="bold" color="teal.500">
+              Detected BPM: {bpm}
+            </Text>
+          )}
+        </VStack>
+        <FileConverter />
+      </>
     </Container>
   );
 };
+
+import FileConverter from "../components/FileConverter";
 
 export default Index;
