@@ -5,6 +5,7 @@ import { FaUpload } from "react-icons/fa";
 const Index = () => {
   const [file, setFile] = useState(null);
   const [bpm, setBpm] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const toast = useToast();
 
   const handleFileChange = (event) => {
@@ -33,17 +34,20 @@ const Index = () => {
         isClosable: true,
       });
     } else {
-      // Here you would typically handle the file upload and BPM detection
-      toast({
-        title: "File uploaded!",
-        description: "We are processing your file to detect BPM.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-      // Simulate BPM detection and reset after upload
-      setBpm(128);
-      setFile(null);
+      setIsProcessing(true);
+      setTimeout(() => {
+        toast({
+          title: "File uploaded!",
+          description: "We are processing your file to detect BPM.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+
+        setBpm(128);
+        setFile(null);
+        setIsProcessing(false);
+      }, 2000);
     }
   };
 
@@ -57,7 +61,7 @@ const Index = () => {
         <Box width="100%">
           <Input type="file" accept=".mp3, .wav" onChange={handleFileChange} placeholder="Upload your file" size="lg" />
         </Box>
-        <Button leftIcon={<FaUpload />} colorScheme="blue" onClick={handleUpload} isDisabled={!file}>
+        <Button leftIcon={<FaUpload />} colorScheme={isProcessing ? "red" : "green"} onClick={handleUpload} isDisabled={!file || isProcessing}>
           Upload and Detect BPM
         </Button>
         {bpm && <Text fontSize="xl">Detected BPM: {bpm}</Text>}
