@@ -4,6 +4,7 @@ import { FaUpload } from "react-icons/fa";
 
 const Index = () => {
   const [file, setFile] = useState(null);
+  const [bpm, setBpm] = useState(null);
   const toast = useToast();
 
   const handleFileChange = (event) => {
@@ -40,7 +41,8 @@ const Index = () => {
         duration: 5000,
         isClosable: true,
       });
-      // Reset after upload
+      // Simulate BPM detection and reset after upload
+      setBpm(128);
       setFile(null);
     }
   };
@@ -58,6 +60,7 @@ const Index = () => {
         <Button leftIcon={<FaUpload />} colorScheme="blue" onClick={handleUpload} isDisabled={!file}>
           Upload and Detect BPM
         </Button>
+        {bpm && <Text fontSize="xl">Detected BPM: {bpm}</Text>}
       </VStack>
     </Container>
   );
