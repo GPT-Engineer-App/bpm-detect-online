@@ -6,6 +6,7 @@ const Index = () => {
   const [file, setFile] = useState(null);
   const [bpm, setBpm] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [countdown, setCountdown] = useState(0);
   const toast = useToast();
 
   const handleFileChange = (event) => {
@@ -35,19 +36,26 @@ const Index = () => {
       });
     } else {
       setIsProcessing(true);
-      setTimeout(() => {
-        toast({
-          title: "File uploaded!",
-          description: "We are processing your file to detect BPM.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
+      setCountdown(10);
+      const countdownInterval = setInterval(() => {
+        setCountdown((prevCountdown) => {
+          if (prevCountdown <= 1) {
+            clearInterval(countdownInterval);
+            toast({
+              title: "File uploaded!",
+              description: "We are processing your file to detect BPM.",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+            });
+            setBpm(128);
+            setFile(null);
+            setIsProcessing(false);
+            return 0;
+          }
+          return prevCountdown - 1;
         });
-
-        setBpm(128);
-        setFile(null);
-        setIsProcessing(false);
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -64,6 +72,7 @@ const Index = () => {
         <Button leftIcon={<FaUpload />} colorScheme={isProcessing ? "red" : "green"} onClick={handleUpload} isDisabled={!file || isProcessing}>
           Upload and Detect BPM
         </Button>
+        {isProcessing && <Text fontSize="md">Processing... {countdown}s remaining</Text>}
         {bpm && <Text fontSize="xl">Detected BPM: {bpm}</Text>}
       </VStack>
     </Container>
