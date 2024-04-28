@@ -74,7 +74,7 @@ const Index = () => {
         </Button>
         {isProcessing && <Text fontSize="md">Processing... {countdown}s remaining</Text>}
         {bpm && (
-          <Text fontSize="3xl" fontWeight="bold" color="teal.500">
+          <Text fontSize="6xl" fontWeight="bold" color="teal.500">
             Detected BPM: {bpm}
           </Text>
         )}
