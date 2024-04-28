@@ -48,7 +48,7 @@ const Index = () => {
               duration: 5000,
               isClosable: true,
             });
-            setBpm(128);
+            setBpm(Math.floor(Math.random() * (160 - 60 + 1) + 60));
             setFile(null);
             setIsProcessing(false);
             return 0;
