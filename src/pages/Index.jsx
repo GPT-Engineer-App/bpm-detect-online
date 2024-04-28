@@ -60,7 +60,7 @@ const Index = () => {
   };
 
   return (
-    <Container centerContent p={8}>
+    <Container centerContent p={8} style={{ background: "linear-gradient(to right, #6a11cb, #2575fc)", fontFamily: "'Arial', sans-serif" }}>
       <VStack spacing={4} width="100%">
         <Heading as="h1" size="xl">
           BPM Detector
@@ -73,7 +73,11 @@ const Index = () => {
           Upload and Detect BPM
         </Button>
         {isProcessing && <Text fontSize="md">Processing... {countdown}s remaining</Text>}
-        {bpm && <Text fontSize="xl">Detected BPM: {bpm}</Text>}
+        {bpm && (
+          <Text fontSize="3xl" fontWeight="bold" color="teal.500">
+            Detected BPM: {bpm}
+          </Text>
+        )}
       </VStack>
     </Container>
   );
